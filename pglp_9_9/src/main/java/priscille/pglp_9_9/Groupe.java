@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * Pattern Composite Groupe
+ * Pattern Composite Groupe.
  */
 public class Groupe extends Forme implements Iterable<Forme> {
 	/**
@@ -14,9 +14,10 @@ public class Groupe extends Forme implements Iterable<Forme> {
             new ArrayList<Forme>();
     /**
      * Constructeur.
+     * @param n Le nom du groupe
      */
     public Groupe(final String n) {
-        super.nom  = n;
+    	setNom(n);
         list = new ArrayList<Forme>();
     }
     /**
@@ -41,14 +42,20 @@ public class Groupe extends Forme implements Iterable<Forme> {
     public Iterator<Forme> iterator() {
         return list.iterator();
     }
-    
+    /**
+     * Fonction de déplacement.
+     * @param x Ajout en abscisse par rapport a la position initiale
+     * @param y Ajout en ordonnée par rapport a la position initiale
+     */
 	@Override
-	public void move(int x, int y) {
+	public void move(final int x, final  int y) {
 		for (Forme f : list) {
-            f.move(x,y);
+            f.move(x, y);
         }
 	}
-
+	/**
+	 * Fonction d'affichage.
+	 */
 	@Override
 	public void draw() {
 		System.out.println("Groupe(");

@@ -53,14 +53,20 @@ public class Position {
         this.x = absc;
         this.y = ord;
     }
-    
+    /**
+     * Fonction de déplacement d'une position.
+     * @param abs Ajout en abscisse par rapport a la position initiale
+     * @param ord Ajout en ordonnée par rapport a la position initiale
+     */
     public void move(final int abs, final int ord) {
     	this.x += abs;
     	this.y += ord;
     }
-    
+    /**
+     * Clone la position.
+     * @return La position clonée
+     */
     public Position clone() {
-    	return new Position(this.x,this.y);
+    	return new Position(this.x, this.y);
     }
-    
 }
