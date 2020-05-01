@@ -3,7 +3,7 @@ package priscille.pglp_9_9;
 import java.util.ArrayList;
 
 public class CercleDaoCRUD extends AbstractDao<Cercle> {
-	/**
+    /**
      * Liste de cercles.
      */
     private ArrayList<Cercle> listCercle;
@@ -32,9 +32,9 @@ public class CercleDaoCRUD extends AbstractDao<Cercle> {
      * @return Le cercle ajouté
      */
     public Cercle create(final Cercle c) {
-        if(this.find(c.getNom()) != null) {
-        	listCercle.add(c);
-        	return c;
+        if (this.find(c.getNom()) != null) {
+            listCercle.add(c);
+            return c;
         }
         return null;
     }
@@ -53,10 +53,10 @@ public class CercleDaoCRUD extends AbstractDao<Cercle> {
     public Cercle update(final Cercle nv) {
         Cercle cercle = this.find(nv.getNom());
         if (cercle != null) {
-        	listCercle.remove(cercle);
+            listCercle.remove(cercle);
             listCercle.add(nv);
             return nv;
         }
-		return cercle;
+        return cercle;
     }
 }

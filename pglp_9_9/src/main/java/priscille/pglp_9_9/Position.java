@@ -1,7 +1,7 @@
 package priscille.pglp_9_9;
 
 public class Position {
-	/**
+    /**
      * Valeur en abscisse.
      */
     private int x;
@@ -59,14 +59,14 @@ public class Position {
      * @param ord Ajout en ordonnée par rapport a la position initiale
      */
     public void move(final int abs, final int ord) {
-    	this.x += abs;
-    	this.y += ord;
+        this.x += abs;
+        this.y += ord;
     }
     /**
      * Clone la position.
      * @return La position clonée
      */
     public Position clone() {
-    	return new Position(this.x, this.y);
+        return new Position(this.x, this.y);
     }
 }

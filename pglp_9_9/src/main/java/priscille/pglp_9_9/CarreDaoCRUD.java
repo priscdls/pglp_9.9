@@ -3,7 +3,7 @@ package priscille.pglp_9_9;
 import java.util.ArrayList;
 
 public class CarreDaoCRUD extends AbstractDao<Carre> {
-	/**
+    /**
      * Liste de Carres.
      */
     private ArrayList<Carre> listCarre;
@@ -32,9 +32,9 @@ public class CarreDaoCRUD extends AbstractDao<Carre> {
      * @return Le Carre ajouté
      */
     public Carre create(final Carre c) {
-        if(this.find(c.getNom()) != null) {
-        	listCarre.add(c);
-        	return c;
+        if (this.find(c.getNom()) != null) {
+            listCarre.add(c);
+            return c;
         }
         return null;
     }
@@ -51,12 +51,12 @@ public class CarreDaoCRUD extends AbstractDao<Carre> {
      * @return Le Carre modifié
      */
     public Carre update(final Carre nv) {
-    	Carre carre = this.find(nv.getNom());
+        Carre carre = this.find(nv.getNom());
         if (carre != null) {
-        	listCarre.remove(carre);
+            listCarre.remove(carre);
             listCarre.add(nv);
             return nv;
         }
-		return carre;
+        return carre;
     }
 }

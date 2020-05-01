@@ -3,7 +3,7 @@ package priscille.pglp_9_9;
 import java.util.ArrayList;
 
 public class RectangleDaoCRUD extends AbstractDao<Rectangle> {
-	/**
+    /**
      * Liste de Rectangles.
      */
     private ArrayList<Rectangle> listRectangle;
@@ -32,9 +32,9 @@ public class RectangleDaoCRUD extends AbstractDao<Rectangle> {
      * @return Le rectangle ajouté
      */
     public Rectangle create(final Rectangle r) {
-        if(this.find(r.getNom()) != null) {
-        	listRectangle.add(r);
-        	return r;
+        if (this.find(r.getNom()) != null) {
+            listRectangle.add(r);
+            return r;
         }
         return null;
     }
@@ -51,12 +51,12 @@ public class RectangleDaoCRUD extends AbstractDao<Rectangle> {
      * @return le Rectangle modifié
      */
     public Rectangle update(final Rectangle nv) {
-    	Rectangle r = this.find(nv.getNom());
+        Rectangle r = this.find(nv.getNom());
         if (r != null) {
-        	listRectangle.remove(r);
+            listRectangle.remove(r);
             listRectangle.add(nv);
             return nv;
         }
-		return r;
+        return r;
     }
 }

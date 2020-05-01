@@ -3,7 +3,7 @@ package priscille.pglp_9_9;
 import java.util.ArrayList;
 
 public class GroupeDaoCRUD extends AbstractDao<Groupe> {
-	/**
+    /**
      * Liste de Groupes.
      */
     private ArrayList<Groupe> listGroupe;
@@ -32,9 +32,9 @@ public class GroupeDaoCRUD extends AbstractDao<Groupe> {
      * @return Le Groupe ajouté
      */
     public Groupe create(final Groupe g) {
-        if(this.find(g.getNom()) != null) {
-        	listGroupe.add(g);
-        	return g;
+        if (this.find(g.getNom()) != null) {
+            listGroupe.add(g);
+            return g;
         }
         return null;
     }
@@ -51,12 +51,12 @@ public class GroupeDaoCRUD extends AbstractDao<Groupe> {
      * @return Le Groupe modifié
      */
     public Groupe update(final Groupe nv) {
-    	Groupe g = this.find(nv.getNom());
+        Groupe g = this.find(nv.getNom());
         if (g != null) {
-        	listGroupe.remove(g);
+            listGroupe.remove(g);
             listGroupe.add(nv);
             return nv;
         }
-		return g;
+        return g;
     }
 }
