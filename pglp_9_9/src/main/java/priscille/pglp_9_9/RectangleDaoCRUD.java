@@ -1,9 +1,16 @@
 package priscille.pglp_9_9;
 
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class RectangleDaoCRUD extends AbstractDao<Rectangle> {
-    /**
+public class RectangleDaoCRUD extends AbstractDao<Rectangle> implements Serializable {
+	/**
+	 * Attribut de sérialisation.
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
      * Liste de Rectangles.
      */
     private ArrayList<Rectangle> listRectangle;
@@ -56,6 +63,33 @@ public class RectangleDaoCRUD extends AbstractDao<Rectangle> {
             listRectangle.remove(r);
             listRectangle.add(nv);
             return nv;
+        }
+        return r;
+    }
+    /**
+     * Fonction de désérialisation.
+     * @param path Adresse du fichier
+     * @return Le RectangleDaoCRUD deserialisé
+     * @throws ClassNotFoundException
+     */
+    public static RectangleDaoCRUD deSerialization(final String path)
+            throws ClassNotFoundException {
+        ObjectInputStream ois = null;
+        RectangleDaoCRUD r = null;
+        try {
+            final FileInputStream fichierIn = new FileInputStream(path);
+            ois = new ObjectInputStream(fichierIn);
+            r = (RectangleDaoCRUD) ois.readObject();
+        } catch (final java.io.IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ois != null) {
+                    ois.close();
+                }
+            } catch (final java.io.IOException ex) {
+                ex.printStackTrace();
+            }
         }
         return r;
     }

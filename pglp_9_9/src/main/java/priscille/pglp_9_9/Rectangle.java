@@ -1,7 +1,14 @@
 package priscille.pglp_9_9;
 
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+
 public class Rectangle extends Forme {
-    /**
+	/**
+	 * Attribut de sérialisation.
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
      * La position du centre.
      */
     private Position centre;
@@ -86,5 +93,32 @@ public class Rectangle extends Forme {
         System.out.println("Rectangle(centre=(" + centre.getX()
         + "," + centre.getY() + "),longueur=" + longueur
         + ",hauteur=" + hauteur + ")");
+    }
+    /**
+     * Fonction de désérialisation.
+     * @param path Adresse du fichier
+     * @return Le Rectangle deserialisé
+     * @throws ClassNotFoundException
+     */
+    public static Rectangle deSerialization(final String path)
+            throws ClassNotFoundException {
+        ObjectInputStream ois = null;
+        Rectangle r = null;
+        try {
+            final FileInputStream fichierIn = new FileInputStream(path);
+            ois = new ObjectInputStream(fichierIn);
+            r = (Rectangle) ois.readObject();
+        } catch (final java.io.IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ois != null) {
+                    ois.close();
+                }
+            } catch (final java.io.IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return r;
     }
 }

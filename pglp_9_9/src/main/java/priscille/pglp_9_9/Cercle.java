@@ -1,7 +1,14 @@
 package priscille.pglp_9_9;
 
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+
 public class Cercle extends Forme {
-    /**
+	/**
+	 * Attribut de sérialisation.
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
      * La position du centre.
      */
     private Position centre;
@@ -64,5 +71,32 @@ public class Cercle extends Forme {
     public void draw() {
         System.out.println("Cercle(centre=(" + centre.getX()
         + "," + centre.getY() + "),rayon=" + rayon + ")");
+    }
+    /**
+     * Fonction de désérialisation.
+     * @param path Adresse du fichier
+     * @return Le Cercle deserialisé
+     * @throws ClassNotFoundException
+     */
+    public static Cercle deSerialization(final String path)
+            throws ClassNotFoundException {
+        ObjectInputStream ois = null;
+        Cercle c = null;
+        try {
+            final FileInputStream fichierIn = new FileInputStream(path);
+            ois = new ObjectInputStream(fichierIn);
+            c = (Cercle) ois.readObject();
+        } catch (final java.io.IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ois != null) {
+                    ois.close();
+                }
+            } catch (final java.io.IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return c;
     }
 }

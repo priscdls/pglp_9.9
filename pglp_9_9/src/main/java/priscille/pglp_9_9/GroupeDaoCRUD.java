@@ -1,9 +1,16 @@
 package priscille.pglp_9_9;
 
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GroupeDaoCRUD extends AbstractDao<Groupe> {
-    /**
+public class GroupeDaoCRUD extends AbstractDao<Groupe> implements Serializable {
+	/**
+	 * Attribut de sérialisation.
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
      * Liste de Groupes.
      */
     private ArrayList<Groupe> listGroupe;
@@ -56,6 +63,33 @@ public class GroupeDaoCRUD extends AbstractDao<Groupe> {
             listGroupe.remove(g);
             listGroupe.add(nv);
             return nv;
+        }
+        return g;
+    }
+    /**
+     * Fonction de désérialisation.
+     * @param path Adresse du fichier
+     * @return Le GroupeDaoCRUD deserialisé
+     * @throws ClassNotFoundException
+     */
+    public static GroupeDaoCRUD deSerialization(final String path)
+            throws ClassNotFoundException {
+        ObjectInputStream ois = null;
+        GroupeDaoCRUD g = null;
+        try {
+            final FileInputStream fichierIn = new FileInputStream(path);
+            ois = new ObjectInputStream(fichierIn);
+            g = (GroupeDaoCRUD) ois.readObject();
+        } catch (final java.io.IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ois != null) {
+                    ois.close();
+                }
+            } catch (final java.io.IOException ex) {
+                ex.printStackTrace();
+            }
         }
         return g;
     }

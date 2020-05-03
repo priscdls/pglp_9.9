@@ -1,9 +1,16 @@
 package priscille.pglp_9_9;
 
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CercleDaoCRUD extends AbstractDao<Cercle> {
-    /**
+public class CercleDaoCRUD extends AbstractDao<Cercle> implements Serializable {
+	/**
+	 * Attribut de sérialisation.
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
      * Liste de cercles.
      */
     private ArrayList<Cercle> listCercle;
@@ -58,5 +65,32 @@ public class CercleDaoCRUD extends AbstractDao<Cercle> {
             return nv;
         }
         return cercle;
+    }
+    /**
+     * Fonction de désérialisation.
+     * @param path Adresse du fichier
+     * @return Le CercleDaoCRUD deserialisé
+     * @throws ClassNotFoundException
+     */
+    public static CercleDaoCRUD deSerialization(final String path)
+            throws ClassNotFoundException {
+        ObjectInputStream ois = null;
+        CercleDaoCRUD c = null;
+        try {
+            final FileInputStream fichierIn = new FileInputStream(path);
+            ois = new ObjectInputStream(fichierIn);
+            c = (CercleDaoCRUD) ois.readObject();
+        } catch (final java.io.IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ois != null) {
+                    ois.close();
+                }
+            } catch (final java.io.IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return c;
     }
 }
