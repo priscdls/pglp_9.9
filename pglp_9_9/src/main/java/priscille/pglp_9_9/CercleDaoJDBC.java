@@ -6,10 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CercleDaoJDBC extends AbstractDao<Cercle> {
-	/**
-     * Connecteur.
-     */
-    protected Connection connect;
     /**
      * Constructeur.
      * @param c Le connecteur
@@ -78,7 +74,7 @@ public class CercleDaoJDBC extends AbstractDao<Cercle> {
      */
     @Override
     public Cercle update(final Cercle c) {
-    	Cercle c2 = this.find(c.getNom());
+        Cercle c2 = this.find(c.getNom());
         if (c2 != null) {
             try {
                 final int un = 1;
@@ -111,7 +107,7 @@ public class CercleDaoJDBC extends AbstractDao<Cercle> {
     public void delete(final Cercle c) {
         final int un = 1;
         try {
-        	GroupeFormeDaoJDBC.deleteGroupeCercle(connect, c.getNom());
+            GroupeFormeDaoJDBC.deleteGroupeCercle(connect, c.getNom());
             PreparedStatement prepare = connect.prepareStatement(
                     "DELETE FROM Cercle WHERE Nom = ?");
             prepare.setString(1, c.getNom());

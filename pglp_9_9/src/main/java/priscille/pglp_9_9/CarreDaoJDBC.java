@@ -6,10 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CarreDaoJDBC extends AbstractDao<Carre> {
-	/**
-     * Connecteur.
-     */
-    protected Connection connect;
     /**
      * Constructeur.
      * @param c Le connecteur
@@ -51,7 +47,7 @@ public class CarreDaoJDBC extends AbstractDao<Carre> {
      */
     @Override
     public Carre find(final String nom) {
-    	Carre c = null;
+        Carre c = null;
         try {
             final int un = 1;
             PreparedStatement prepare = connect.prepareStatement(
@@ -78,7 +74,7 @@ public class CarreDaoJDBC extends AbstractDao<Carre> {
      */
     @Override
     public Carre update(final Carre c) {
-    	Carre c2 = this.find(c.getNom());
+        Carre c2 = this.find(c.getNom());
         if (c2 != null) {
             try {
                 final int un = 1;
@@ -111,7 +107,7 @@ public class CarreDaoJDBC extends AbstractDao<Carre> {
     public void delete(final Carre c) {
         final int un = 1;
         try {
-        	GroupeFormeDaoJDBC.deleteGroupeCarre(connect, c.getNom());
+            GroupeFormeDaoJDBC.deleteGroupeCarre(connect, c.getNom());
             PreparedStatement prepare = connect.prepareStatement(
                     "DELETE FROM Carre WHERE Nom = ?");
             prepare.setString(1, c.getNom());

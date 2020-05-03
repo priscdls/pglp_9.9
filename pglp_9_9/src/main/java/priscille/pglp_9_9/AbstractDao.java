@@ -1,6 +1,12 @@
 package priscille.pglp_9_9;
 
+import java.sql.Connection;
+
 public abstract class AbstractDao<T> {
+    /**
+     * Connecteur.
+     */
+    protected Connection connect;
     /**
      * Retourne l'objet recherché.
      * @param nom Le nom de l'objet

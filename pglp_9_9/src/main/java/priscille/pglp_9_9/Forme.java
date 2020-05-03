@@ -6,10 +6,10 @@ import java.io.Serializable;
 
 public abstract class Forme implements Serializable {
     /**
-	 * Attribut de sérialisation.
-	 */
-	private static final long serialVersionUID = 1L;
-	/**
+     * Attribut de sérialisation.
+     */
+    private static final long serialVersionUID = 1L;
+    /**
      * Le nom de la forme.
      */
     private String nom;

@@ -4,11 +4,11 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
 public class Cercle extends Forme {
-	/**
-	 * Attribut de sérialisation.
-	 */
-	private static final long serialVersionUID = 1L;
-	/**
+    /**
+     * Attribut de sérialisation.
+     */
+    private static final long serialVersionUID = 1L;
+    /**
      * La position du centre.
      */
     private Position centre;

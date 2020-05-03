@@ -6,10 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class RectangleDaoJDBC extends AbstractDao<Rectangle> {
-	/**
-     * Connecteur.
-     */
-    protected Connection connect;
     /**
      * Constructeur.
      * @param c Le connecteur
@@ -53,7 +49,7 @@ public class RectangleDaoJDBC extends AbstractDao<Rectangle> {
      */
     @Override
     public Rectangle find(final String nom) {
-    	Rectangle r = null;
+        Rectangle r = null;
         try {
             final int un = 1;
             PreparedStatement prepare = connect.prepareStatement(
@@ -81,7 +77,7 @@ public class RectangleDaoJDBC extends AbstractDao<Rectangle> {
      */
     @Override
     public Rectangle update(final Rectangle r) {
-    	Rectangle r2 = this.find(r.getNom());
+        Rectangle r2 = this.find(r.getNom());
         if (r2 != null) {
             try {
                 final int un = 1;
@@ -117,7 +113,7 @@ public class RectangleDaoJDBC extends AbstractDao<Rectangle> {
     public void delete(final Rectangle r) {
         final int un = 1;
         try {
-        	GroupeFormeDaoJDBC.deleteGroupeRectangle(connect, r.getNom());
+            GroupeFormeDaoJDBC.deleteGroupeRectangle(connect, r.getNom());
             PreparedStatement prepare = connect.prepareStatement(
                     "DELETE FROM Rectangle WHERE Nom = ?");
             prepare.setString(1, r.getNom());

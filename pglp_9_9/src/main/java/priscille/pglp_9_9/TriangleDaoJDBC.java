@@ -6,10 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TriangleDaoJDBC extends AbstractDao<Triangle> {
-	/**
-     * Connecteur.
-     */
-    protected Connection connect;
     /**
      * Constructeur.
      * @param c Le connecteur
@@ -57,7 +53,7 @@ public class TriangleDaoJDBC extends AbstractDao<Triangle> {
      */
     @Override
     public Triangle find(final String nom) {
-    	Triangle t = null;
+        Triangle t = null;
         try {
             final int un = 1;
             PreparedStatement prepare = connect.prepareStatement(
@@ -87,7 +83,7 @@ public class TriangleDaoJDBC extends AbstractDao<Triangle> {
      */
     @Override
     public Triangle update(final Triangle t) {
-    	Triangle t2 = this.find(t.getNom());
+        Triangle t2 = this.find(t.getNom());
         if (t2 != null) {
             try {
                 final int un = 1;
@@ -127,7 +123,7 @@ public class TriangleDaoJDBC extends AbstractDao<Triangle> {
     public void delete(final Triangle t) {
         final int un = 1;
         try {
-        	GroupeFormeDaoJDBC.deleteGroupeTriangle(connect, t.getNom());
+            GroupeFormeDaoJDBC.deleteGroupeTriangle(connect, t.getNom());
             PreparedStatement prepare = connect.prepareStatement(
                     "DELETE FROM Triangle WHERE Nom = ?");
             prepare.setString(1, t.getNom());

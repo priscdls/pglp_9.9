@@ -9,11 +9,11 @@ import java.util.Iterator;
  * Pattern Composite Groupe.
  */
 public class Groupe extends Forme implements Iterable<Forme> {
-	/**
-	 * Attribut de sérialisation.
-	 */
-	private static final long serialVersionUID = 1L;
-	/**
+    /**
+     * Attribut de sérialisation.
+     */
+    private static final long serialVersionUID = 1L;
+    /**
      * Liste des formes d'un même composite.
      */
     private ArrayList<Forme> list =
