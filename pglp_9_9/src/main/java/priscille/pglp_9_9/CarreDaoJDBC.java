@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class CarreDaoJDBC extends AbstractDao<Carre> {
     /**
@@ -65,6 +66,26 @@ public class CarreDaoJDBC extends AbstractDao<Carre> {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+        return c;
+    }
+    /**
+     * Retourne tous les Carres.
+     * @return Les Carres trouvé
+     */
+    @Override
+    public ArrayList<Carre> findAll() {
+    	ArrayList<Carre> c = new ArrayList<Carre>();
+        try {
+            PreparedStatement prepare = connect.prepareStatement(
+                    "SELECT Nom FROM Carre");
+            ResultSet result = prepare.executeQuery();
+            if (result.next()) {
+                c.add(find(result.getString("Nom")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<Carre>();
         }
         return c;
     }

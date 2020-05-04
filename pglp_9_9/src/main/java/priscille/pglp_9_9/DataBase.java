@@ -11,9 +11,14 @@ public abstract class DataBase {
      * @return Le connecteur a la base
      * @throws SQLException
      */
-    public static Connection createBase() throws SQLException {
-        return DriverManager.getConnection(
-                "jdbc:derby:DataForme;create=true");
+    public static Connection createBase() {
+        try {
+			return DriverManager.getConnection(
+			        "jdbc:derby:DataForme;create=true");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
     }
     /**
      * Supprime toutes les tables de la base de données.

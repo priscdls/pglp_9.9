@@ -102,6 +102,26 @@ public class GroupeDaoJDBC extends AbstractDao<Groupe> {
         return g;
     }
     /**
+     * Retourne tous les Groupes.
+     * @return Les Groupes trouvés
+     */
+    @Override
+    public ArrayList<Groupe> findAll() {
+    	ArrayList<Groupe> g = new ArrayList<Groupe>();
+        try {
+            PreparedStatement prepare = connect.prepareStatement(
+                    "SELECT Nom FROM Groupe");
+            ResultSet result = prepare.executeQuery();
+            if (result.next()) {
+                g.add(find(result.getString("Nom")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<Groupe>();
+        }
+        return g;
+    }
+    /**
      * Modifie un Groupe.
      * @param g Le Groupe a modifier
      * @return Le groupe modifié

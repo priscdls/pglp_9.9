@@ -1,13 +1,11 @@
 package priscille.pglp_9_9;
 
 /**
- * Hello world!
+ * Classe DrawingApp.
  *
  */
-public class DrawingApp 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+public class DrawingApp {
+    
+    public static void run ( String[] args ) {
     }
 }

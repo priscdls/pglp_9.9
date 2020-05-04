@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class CercleDaoJDBC extends AbstractDao<Cercle> {
     /**
@@ -65,6 +66,26 @@ public class CercleDaoJDBC extends AbstractDao<Cercle> {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+        return c;
+    }
+    /**
+     * Retourne tous les Cercles.
+     * @return Les cercles trouvés
+     */
+    @Override
+    public ArrayList<Cercle> findAll() {
+    	ArrayList<Cercle> c = new ArrayList<Cercle>();
+        try {
+            PreparedStatement prepare = connect.prepareStatement(
+                    "SELECT Nom FROM Cercle");
+            ResultSet result = prepare.executeQuery();
+            if (result.next()) {
+                c.add(find(result.getString("Nom")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<Cercle>();
         }
         return c;
     }

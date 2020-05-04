@@ -1,6 +1,7 @@
 package priscille.pglp_9_9;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 public abstract class AbstractDao<T> {
     /**
@@ -13,6 +14,11 @@ public abstract class AbstractDao<T> {
      * @return L'objet trouvé
      */
     public abstract T find(String nom);
+    /**
+     * Retourne tous les objets.
+     * @return Les objets trouvés
+     */
+    public abstract ArrayList<T> findAll();
     /**
      * Ajoute un objet.
      * @param t L'objet a ajouter

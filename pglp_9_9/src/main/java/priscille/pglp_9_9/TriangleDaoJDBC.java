@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class TriangleDaoJDBC extends AbstractDao<Triangle> {
     /**
@@ -74,6 +75,26 @@ public class TriangleDaoJDBC extends AbstractDao<Triangle> {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+        return t;
+    }
+    /**
+     * Retourne tous les Triangles.
+     * @return Les Triangles trouvés
+     */
+    @Override
+    public ArrayList<Triangle> findAll() {
+    	ArrayList<Triangle> t = new ArrayList<Triangle>();
+        try {
+            PreparedStatement prepare = connect.prepareStatement(
+                    "SELECT Nom FROM Triangle");
+            ResultSet result = prepare.executeQuery();
+            if (result.next()) {
+                t.add(find(result.getString("Nom")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<Triangle>();
         }
         return t;
     }

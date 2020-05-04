@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class RectangleDaoJDBC extends AbstractDao<Rectangle> {
     /**
@@ -68,6 +69,26 @@ public class RectangleDaoJDBC extends AbstractDao<Rectangle> {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+        return r;
+    }
+    /**
+     * Retourne tous les Rectangles.
+     * @return Les Rectangles trouvés
+     */
+    @Override
+    public ArrayList<Rectangle> findAll() {
+    	ArrayList<Rectangle> r = new ArrayList<Rectangle>();
+        try {
+            PreparedStatement prepare = connect.prepareStatement(
+                    "SELECT Nom FROM Rectangle");
+            ResultSet result = prepare.executeQuery();
+            if (result.next()) {
+                r.add(find(result.getString("Nom")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<Rectangle>();
         }
         return r;
     }
