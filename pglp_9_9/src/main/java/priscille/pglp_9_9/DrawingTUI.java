@@ -1,18 +1,12 @@
 package priscille.pglp_9_9;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class DrawingTUI {
-	/**
-	 * Scanner.
-	 */
-	private Scanner scanner;
 	/**
 	 * Constructeur.
 	 */
 	public DrawingTUI() {
-		this.scanner = new Scanner(System.in);
 	}
 	/**
 	 * Lecture d'une commande pour créer un cercle.
@@ -113,7 +107,7 @@ public class DrawingTUI {
 	 * @param split La ligne de commande
 	 * @return
 	 */
-	private Object triangleCommand(String[] split) {
+	private Forme triangleCommand(String[] split) {
 	    String[] split2 = split[1].split("Triangle");
 		if (!split2[0].equals("")) {
 			 System.err.println("Commande invalide");
@@ -143,11 +137,39 @@ public class DrawingTUI {
 		 return null;
 	}
 	/**
+	 * Recherche une forme parmis tout les types 
+	 * a partir du nom de la variable.
+	 * @param nom La variable dont on cherche la forme
+	 * @return La forme de la variable
+	 */
+	private Forme findAll(String nom) {
+		FactoryDaoJDBC fdj = new FactoryDaoJDBC(DataBase.createBase());
+        CercleDaoJDBC cercledj = (CercleDaoJDBC) fdj.getCercleDao();
+        CarreDaoJDBC carredj = (CarreDaoJDBC) fdj.getCarreDao();
+        RectangleDaoJDBC rdj = (RectangleDaoJDBC) fdj.getRectangleDao();
+        TriangleDaoJDBC tdj = (TriangleDaoJDBC) fdj.getTriangleDao();
+        GroupeDaoJDBC gdj = (GroupeDaoJDBC) fdj.getGroupeDao();
+        Forme form = cercledj.find(nom);
+        if (form == null) {
+        	form = carredj.find(nom);
+        }
+        if (form == null) {
+        	form = rdj.find(nom);
+        }
+        if (form == null) {
+        	form = tdj.find(nom);
+        }
+        if (form == null) {
+        	form = gdj.find(nom);
+        }
+        return form;
+	}
+	/**
 	 * Lecture d'une commande pour créer un groupe.
 	 * @param split La ligne de commande
 	 * @return
 	 */
-	private Object groupeCommand(String[] split) {
+	private Forme groupeCommand(String[] split) {
 	    String[] split2 = split[1].split("Groupe");
 		if (!split2[0].equals("")) {
 			 System.err.println("Commande invalide");
@@ -155,7 +177,16 @@ public class DrawingTUI {
 		 if (split2[1].startsWith("(") && split2[1].endsWith(")")) {
 			 split2[1] = split2[1].substring(1, split2[1].length()-1);
 			 String[] sousGroupe = split2[1].split(",");
-			 Groupe g = new Groupe(split[0],sousGroupe);
+			 Groupe g = new Groupe(split[0]);
+			 for (int i = 0; i<sousGroupe.length; i++) {
+				 Forme f = findAll(sousGroupe[i]);
+				 if (f != null) {
+					 g.add(f);
+				 } else {
+					 System.err.println("Commande invalide");
+					 return null;
+				 }
+			 }
 			 return g;
 		 } else {
 			 System.err.println("Commande invalide");
@@ -167,7 +198,7 @@ public class DrawingTUI {
 	 * @param command La ligne de commande
 	 * @return
 	 */
-	private Object moveCommand(String command) {
+	private Command moveCommand(String command) {
 		command.replace(" ","");
 		String[] split = command.split("move");
 		if (!split[0].equals("")) {
@@ -181,7 +212,12 @@ public class DrawingTUI {
 				try {
 					Position p = new Position(position);
 					String nom = split2[0];
-					return ;
+					Forme f = findAll(nom);
+					if (f != null) {
+						return new MoveCommand(f,p.getX(),p.getY());
+					} else {
+						System.err.println("Commande invalide");
+					}
 					} catch (Exception e) {
 						System.err.println("Commande invalide");
 					}
@@ -198,7 +234,7 @@ public class DrawingTUI {
 	 * @param command La ligne de commande
 	 * @return
 	 */
-	private Object drawCommand(String command) {
+	private Command drawCommand(String command) {
 		command.replace(" ","");
 		String[] split = command.split("draw");
 		if (!split[0].equals("")) {
@@ -207,7 +243,17 @@ public class DrawingTUI {
 		 if (split[1].startsWith("(") && split[1].endsWith(")")) {
 			 split[1] = split[1].substring(1, split[1].length()-1);
 			 String[] nom = split[1].split(",");
-			 return ;
+			 ArrayList<Forme> lf = new ArrayList<Forme>();
+			 for (String n : nom) {
+				 Forme f = findAll(n);
+				 if (f != null) {
+					 lf.add(f);
+				 } else {
+					 System.err.println("Commande invalide");
+					 return null;
+				 }
+			 }
+			 return new DrawCommand(lf);
 		 } else {
 			 System.err.println("Commande invalide");
 		 }
@@ -240,10 +286,10 @@ public class DrawingTUI {
 	}
 	/**
 	 * Lecture d'une commande.
+	 * @param command La ligne de commandes rentrée par l'utilisateur
 	 * @return
 	 */
-	public Object nextCommand() {
-		String command = scanner.nextLine();
+	public Command nextCommand(String command) {
 		if (command.contains("=")) {
 			String [] split = command.split("=");
 			split[0].trim();
@@ -252,28 +298,34 @@ public class DrawingTUI {
 				return null;
 			} else {
 				split[1].replace(" ","");
+				Forme f = null;
 				if (split[1].contains("Cercle")) {
-					return cercleCommand(split);
+					f = cercleCommand(split);
 				} else if (split[1].contains("Carre")) {
-					return carreCommand(split);
+					f = carreCommand(split);
 				} else if (split[1].contains("Rectangle")) {
-					return rectangleCommand(split);
+					f = rectangleCommand(split);
 				} else if (split[1].contains("Triangle")) {
-					return triangleCommand(split);
+					f = triangleCommand(split);
 				} else if (split[1].contains("Groupe")) {
-					return groupeCommand(split);
+					f = groupeCommand(split);
+				}
+				if (f != null) {
+					return new CreateCommand(f);
 				} else {
 					System.err.println("Commande invalide");
+					return null;
 				}
 			}
 		} else if (command.contains("move")) {
 			return moveCommand(command);
 		} else if (command.contains("draw")) {
 			return drawCommand(command);
-		}else if (command.contains("drawAll")) {
+		} else if (command.contains("drawAll")) {
 			drawAllCommand(command);
-		} else {
+		} else if (!command.equals("exit")){
 			System.err.println("Commande invalide");
 		}
+		return null;
 	}
 }
