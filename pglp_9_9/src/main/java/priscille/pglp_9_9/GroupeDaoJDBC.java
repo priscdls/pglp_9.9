@@ -64,8 +64,9 @@ public class GroupeDaoJDBC extends AbstractDao<Groupe> {
                 GroupeFormeDaoJDBC.createGroupeForme(connect,
                         g.getNom(), f.getNom());
             }
+            System.out.println("Groupe créé");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Nom existe déjà");
             return null;
         }
         return g;

@@ -1,5 +1,7 @@
 package priscille.pglp_9_9;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DrawingTUI {
@@ -168,7 +170,8 @@ public class DrawingTUI {
      * @return La forme de la variable
      */
     private Forme findAll(final String nom) {
-        FactoryDaoJDBC fdj = new FactoryDaoJDBC(DataBase.createBase());
+        Connection c = DataBase.createBase();
+        FactoryDaoJDBC fdj = new FactoryDaoJDBC(c);
         CercleDaoJDBC cercledj = (CercleDaoJDBC) fdj.getCercleDao();
         CarreDaoJDBC carredj = (CarreDaoJDBC) fdj.getCarreDao();
         RectangleDaoJDBC rdj = (RectangleDaoJDBC) fdj.getRectangleDao();
@@ -186,6 +189,11 @@ public class DrawingTUI {
         }
         if (form == null) {
             form = gdj.find(nom);
+        }
+        try {
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return form;
     }
@@ -223,12 +231,13 @@ public class DrawingTUI {
     }
     /**
      * Lecture d'une commande pour deplacer une forme.
-     * @param command La ligne de commande
+     * @param comm La ligne de commande
      * @return La command pour déplacer une forme
      */
-    private Command moveCommand(final String command) {
+    private Command moveCommand(final String comm) {
         final int trois = 3;
-        command.replace(" ", "");
+        String command = comm;
+        command = command.replace(" ", "");
         String[] split = command.split("move");
         if (!split[0].equals("")) {
              System.err.println("Commande invalide");
@@ -264,11 +273,12 @@ public class DrawingTUI {
     }
     /**
      * Lecture d'une commande pour dessiner une forme.
-     * @param command La ligne de commande
+     * @param comm La ligne de commande
      * @return La commande pour réaliser un affichage
      */
-    private Command drawCommand(final String command) {
-        command.replace(" ", "");
+    private Command drawCommand(final String comm) {
+        String command = comm;
+        command = command.replace(" ", "");
         String[] split = command.split("draw");
         if (!split[0].equals("")) {
              System.err.println("Commande invalide");
@@ -296,16 +306,17 @@ public class DrawingTUI {
     }
     /**
      * Lecture d'une commande pour dessiner toutes les formes.
-     * @param command La ligne de commande
+     * @param comm La ligne de commande
      */
-    private void drawAllCommand(final String command) {
-        command.replace(" ", "");
+    private void drawAllCommand(final String comm) {
+        String command = comm;
+        command = command.replace(" ", "");
         String[] split = command.split("drawAll");
         if (!split[0].equals("") || !split[1].equals("")) {
              System.err.println("Commande invalide");
          } else {
-             FactoryDaoJDBC fdj = new FactoryDaoJDBC(
-                     DataBase.createBase());
+             Connection c = DataBase.createBase();
+             FactoryDaoJDBC fdj = new FactoryDaoJDBC(c);
              CercleDaoJDBC cercle = (CercleDaoJDBC)
                      fdj.getCercleDao();
              CarreDaoJDBC carre = (CarreDaoJDBC)
@@ -322,6 +333,11 @@ public class DrawingTUI {
              for (Forme f2 : f) {
                  f2.draw();
              }
+             try {
+                c.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
          }
     }
     /**
@@ -338,7 +354,7 @@ public class DrawingTUI {
                         + "car contenant des espaces");
                 return null;
             } else {
-                split[1].replace(" ", "");
+                split[1] = split[1].replace(" ", "");
                 Forme f = null;
                 if (split[1].contains("Cercle")) {
                     f = cercleCommand(split);
@@ -360,7 +376,7 @@ public class DrawingTUI {
             }
         } else if (command.contains("move")) {
             return moveCommand(command);
-        } else if (command.contains("draw")) {
+        } else if (command.contains("draw(")) {
             return drawCommand(command);
         } else if (command.contains("drawAll")) {
             drawAllCommand(command);

@@ -53,6 +53,10 @@ public abstract class DataBase {
             s.execute("DROP TABLE Groupe");
         } catch (SQLException e) {
         }
+        try {
+            s.execute("DROP TABLE Forme");
+        } catch (SQLException e) {
+        }
     }
     /**
      * Création de toutes les tables de la base de données.
@@ -70,7 +74,7 @@ public abstract class DataBase {
                 + "Centre_X int,"
                 + "Centre_Y int,"
                 + "Rayon int,"
-                + "PRIMARY KEY (Nom)"
+                + "PRIMARY KEY (Nom),"
                 + "FOREIGN KEY (Nom) REFERENCES Forme (Nom)"
                 + ")";
         String carre = "CREATE TABLE Carre ("
@@ -78,7 +82,7 @@ public abstract class DataBase {
                 + "Centre_X int,"
                 + "Centre_Y int,"
                 + "Longueur int,"
-                + "PRIMARY KEY (Nom)"
+                + "PRIMARY KEY (Nom),"
                 + "FOREIGN KEY (Nom) REFERENCES Forme (Nom)"
                 + ")";
         String rectangle = "CREATE TABLE Rectangle ("
@@ -87,7 +91,7 @@ public abstract class DataBase {
                 + "Centre_Y int,"
                 + "Longueur int,"
                 + "Hauteur int,"
-                + "PRIMARY KEY (Nom)"
+                + "PRIMARY KEY (Nom),"
                 + "FOREIGN KEY (Nom) REFERENCES Forme (Nom)"
                 + ")";
         String triangle = "CREATE TABLE Triangle ("
@@ -98,19 +102,19 @@ public abstract class DataBase {
                 + "Sommet2_Y int,"
                 + "Sommet3_X int,"
                 + "Sommet3_Y int,"
-                + "PRIMARY KEY (Nom)"
+                + "PRIMARY KEY (Nom),"
                 + "FOREIGN KEY (Nom) REFERENCES Forme (Nom)"
                 + ")";
         String groupe = "CREATE TABLE Groupe ("
                 + "Nom varchar(30),"
-                + "PRIMARY KEY (Nom)"
+                + "PRIMARY KEY (Nom),"
                 + "FOREIGN KEY (Nom) REFERENCES Forme (Nom)"
                 + ")";
         String groupeForme = "CREATE TABLE GroupeForme ("
                 + "NomGroupe varchar(30),"
                 + "NomForme varchar(30),"
-                + "PRIMARY KEY (NomGroupe, NomForme)"
-                + "FOREIGN KEY (NomGroupe) REFERENCES Groupe (Nom)"
+                + "PRIMARY KEY (NomGroupe, NomForme),"
+                + "FOREIGN KEY (NomGroupe) REFERENCES Groupe (Nom),"
                 + "FOREIGN KEY (NomForme) REFERENCES Forme (Nom)"
                 + ")";
         Statement s = connect.createStatement();

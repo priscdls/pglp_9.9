@@ -42,8 +42,9 @@ public class RectangleDaoJDBC extends AbstractDao<Rectangle> {
             prepare.setInt(cinq, r.getHauteur());
             result = prepare.executeUpdate();
             assert result == un;
+            System.out.println("Rectangle créé");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Nom existe déjà");
             return null;
         }
         return r;
@@ -112,16 +113,17 @@ public class RectangleDaoJDBC extends AbstractDao<Rectangle> {
                 final int quatre = 4;
                 final int cinq = 5;
                 PreparedStatement prepare = connect.prepareStatement(
-                        "UPDATE Rectangle SET Nom = ?, Centre_X = ?,"
+                        "UPDATE Rectangle SET Centre_X = ?,"
                         + "Centre_Y = ?, Longueur = ?, Hauteur = ?"
                         + " WHERE Nom = ?");
-                prepare.setString(un, r.getNom());
-                prepare.setInt(deux, r.getCentre().getX());
-                prepare.setInt(trois, r.getCentre().getY());
-                prepare.setInt(quatre, r.getLongueur());
-                prepare.setInt(cinq, r.getHauteur());
+                prepare.setString(cinq, r.getNom());
+                prepare.setInt(un, r.getCentre().getX());
+                prepare.setInt(deux, r.getCentre().getY());
+                prepare.setInt(trois, r.getLongueur());
+                prepare.setInt(quatre, r.getHauteur());
                 int result = prepare.executeUpdate();
                 assert result == 1;
+                System.out.println("Rectangle deplacé");
             } catch (SQLException e) {
                 e.printStackTrace();
                 return r2;

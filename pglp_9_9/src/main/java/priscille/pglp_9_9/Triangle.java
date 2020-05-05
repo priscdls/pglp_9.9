@@ -1,13 +1,6 @@
 package priscille.pglp_9_9;
 
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-
 public class Triangle extends Forme {
-    /**
-     * Attribut de sérialisation.
-     */
-    private static final long serialVersionUID = 1L;
     /**
      * Sommet 1.
      */
@@ -96,32 +89,5 @@ public class Triangle extends Forme {
         + "," + haut.getY() + "),sommet2=(" + gauche.getX()
         + "," + gauche.getY() + "),sommet3=(" + droite.getX()
         + "," + droite.getY() + "))");
-    }
-    /**
-     * Fonction de désérialisation.
-     * @param path Adresse du fichier
-     * @return Le Triangle deserialisé
-     * @throws ClassNotFoundException
-     */
-    public static Triangle deSerialization(final String path)
-            throws ClassNotFoundException {
-        ObjectInputStream ois = null;
-        Triangle t = null;
-        try {
-            final FileInputStream fichierIn = new FileInputStream(path);
-            ois = new ObjectInputStream(fichierIn);
-            t = (Triangle) ois.readObject();
-        } catch (final java.io.IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (ois != null) {
-                    ois.close();
-                }
-            } catch (final java.io.IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return t;
     }
 }

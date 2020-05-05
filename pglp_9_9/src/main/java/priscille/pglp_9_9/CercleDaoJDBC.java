@@ -40,8 +40,9 @@ public class CercleDaoJDBC extends AbstractDao<Cercle> {
             prepare.setInt(quatre, c.getRayon());
             result = prepare.executeUpdate();
             assert result == un;
+            System.out.println("Cercle créé");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Nom existe déjà");
             return null;
         }
         return c;
@@ -108,14 +109,15 @@ public class CercleDaoJDBC extends AbstractDao<Cercle> {
                 final int trois = 3;
                 final int quatre = 4;
                 PreparedStatement prepare = connect.prepareStatement(
-                        "UPDATE Cercle SET Nom = ?, Centre_X = ?,"
+                        "UPDATE Cercle SET Centre_X = ?,"
                         + "Centre_Y = ?, Rayon = ? WHERE Nom = ?");
-                prepare.setString(un, c.getNom());
-                prepare.setInt(deux, c.getCentre().getX());
-                prepare.setInt(trois, c.getCentre().getY());
-                prepare.setInt(quatre, c.getRayon());
+                prepare.setString(quatre, c.getNom());
+                prepare.setInt(un, c.getCentre().getX());
+                prepare.setInt(deux, c.getCentre().getY());
+                prepare.setInt(trois, c.getRayon());
                 int result = prepare.executeUpdate();
                 assert result == 1;
+                System.out.println("Cercle deplacé");
             } catch (SQLException e) {
                 e.printStackTrace();
                 return c2;

@@ -1,5 +1,8 @@
 package priscille.pglp_9_9;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public class CreateCommand implements Command {
     /**
      * Forme a créer.
@@ -16,7 +19,8 @@ public class CreateCommand implements Command {
      * Execute la commande de création.
      */
     public void execute() {
-        FactoryDaoJDBC fdj = new FactoryDaoJDBC(DataBase.createBase());
+        Connection c = DataBase.createBase();
+        FactoryDaoJDBC fdj = new FactoryDaoJDBC(c);
         if (form.getClass() == Cercle.class) {
             CercleDaoJDBC cercle = (CercleDaoJDBC)
                     fdj.getCercleDao();
@@ -36,6 +40,11 @@ public class CreateCommand implements Command {
             GroupeDaoJDBC groupe = (GroupeDaoJDBC)
                     fdj.getGroupeDao();
             groupe.create((Groupe) form);
+        }
+        try {
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

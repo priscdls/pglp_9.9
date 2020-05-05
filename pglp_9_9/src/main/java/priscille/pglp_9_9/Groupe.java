@@ -1,7 +1,5 @@
 package priscille.pglp_9_9;
 
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -9,10 +7,6 @@ import java.util.Iterator;
  * Pattern Composite Groupe.
  */
 public class Groupe extends Forme implements Iterable<Forme> {
-    /**
-     * Attribut de sérialisation.
-     */
-    private static final long serialVersionUID = 1L;
     /**
      * Liste des formes d'un même composite.
      */
@@ -69,32 +63,5 @@ public class Groupe extends Forme implements Iterable<Forme> {
             f.draw();
         }
         System.out.println(")");
-    }
-    /**
-     * Fonction de désérialisation.
-     * @param path Adresse du fichier
-     * @return Le Groupe deserialisé
-     * @throws ClassNotFoundException
-     */
-    public static Groupe deSerialization(final String path)
-            throws ClassNotFoundException {
-        ObjectInputStream ois = null;
-        Groupe g = null;
-        try {
-            final FileInputStream fichierIn = new FileInputStream(path);
-            ois = new ObjectInputStream(fichierIn);
-            g = (Groupe) ois.readObject();
-        } catch (final java.io.IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (ois != null) {
-                    ois.close();
-                }
-            } catch (final java.io.IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return g;
     }
 }

@@ -1,5 +1,7 @@
 package priscille.pglp_9_9;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 /**
@@ -25,8 +27,13 @@ public class DrawingApp {
     /**
      * Lance l'execution du programme.
      * @param args
+     * @throws SQLException
      */
-    public static void main(final String[] args) {
+    public static void main(final String[] args) throws SQLException {
+        Connection connect = DataBase.createBase();
+        //DataBase.deleteAllTables(connect);
+        DataBase.createAllTables(connect);
+        connect.close();
         DrawingApp da = new DrawingApp();
         da.run();
     }
@@ -34,12 +41,18 @@ public class DrawingApp {
      * Execute le programme.
      */
     public void run() {
-        System.out.println("Type de commandes valides :\n"
-                + "Creation : c1 = Cercle((0, 0), 50)\n"
+        System.out.println("Types de commandes valides :\n"
+                + "Creation : \n"
+                + "c1 = Cercle((0, 0), 50)\n"
+                + "c2 = Carre((0, 0), 30)\n"
+                + "r1 = Rectangle((0, 0), 40, 10)\n"
+                + "t1 = Triangle((0, 0), (2, 2), (4, 0))\n"
+                + "g1 = Groupe(c1, c2, r1, t1)\n"
                 + "Déplacement : move(c1, (10, 20))\n"
                 + "Affichage : draw(c1, c2)\n"
                 + "Affichage du dessin en entier : drawAll\n"
-                + "Quitter : exit");
+                + "Quitter : exit\n\n"
+                + "Entrer une commande :");
         String command = scanner.nextLine();
         Command c;
         while (!command.equals("exit")) {
@@ -47,7 +60,7 @@ public class DrawingApp {
             if (c != null) {
                 c.execute();
             }
-            System.out.println("Entrer une commande");
+            System.out.println("Entrer une nouvelle commande :");
             command = scanner.nextLine();
         }
     }

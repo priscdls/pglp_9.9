@@ -1,5 +1,8 @@
 package priscille.pglp_9_9;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public class MoveCommand implements Command {
     /**
      * Forme a deplacer.
@@ -29,7 +32,8 @@ public class MoveCommand implements Command {
      */
     public void execute() {
         form.move(vecteurX, vecteurY);
-        FactoryDaoJDBC fdj = new FactoryDaoJDBC(DataBase.createBase());
+        Connection c = DataBase.createBase();
+        FactoryDaoJDBC fdj = new FactoryDaoJDBC(c);
         if (form.getClass() == Cercle.class) {
             CercleDaoJDBC cercle = (CercleDaoJDBC)
                     fdj.getCercleDao();
@@ -49,6 +53,11 @@ public class MoveCommand implements Command {
             GroupeDaoJDBC groupe = (GroupeDaoJDBC)
                     fdj.getGroupeDao();
             groupe.update((Groupe) form);
+        }
+        try {
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

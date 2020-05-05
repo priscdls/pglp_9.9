@@ -34,7 +34,7 @@ public class TriangleDaoJDBC extends AbstractDao<Triangle> {
             prepare.setString(un, t.getNom());
             int result = prepare.executeUpdate();
             prepare = connect.prepareStatement(
-                    "INSERT INTO Carre (Nom,Sommet1_X,Sommet1_Y,"
+                    "INSERT INTO Triangle (Nom,Sommet1_X,Sommet1_Y,"
                     + "Sommet2_X,Sommet2_Y,Sommet3_X,Sommet3_Y)"
                     + "VALUES (?,?,?,?,?,?,?)");
             prepare.setString(un, t.getNom());
@@ -46,8 +46,9 @@ public class TriangleDaoJDBC extends AbstractDao<Triangle> {
             prepare.setInt(sept, t.getDroite().getY());
             result = prepare.executeUpdate();
             assert result == un;
+            System.out.println("Triangle créé");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Nom existe déjà");
             return null;
         }
         return t;
@@ -120,18 +121,19 @@ public class TriangleDaoJDBC extends AbstractDao<Triangle> {
                 final int six = 6;
                 final int sept = 7;
                 PreparedStatement prepare = connect.prepareStatement(
-                        "UPDATE Carre SET Nom = ?, Sommet1_X = ?,"
+                        "UPDATE Triangle SET Sommet1_X = ?,"
                         + "Sommet1_Y = ?, Sommet2_X = ?, Sommet2_Y = ?,"
                         + "Sommet3_X = ?, Sommet3_Y = ? WHERE Nom = ?");
-                prepare.setString(un, t.getNom());
-                prepare.setInt(deux, t.getHaut().getX());
-                prepare.setInt(trois, t.getHaut().getY());
-                prepare.setInt(quatre, t.getGauche().getX());
-                prepare.setInt(cinq, t.getGauche().getY());
-                prepare.setInt(six, t.getDroite().getX());
-                prepare.setInt(sept, t.getDroite().getY());
+                prepare.setString(sept, t.getNom());
+                prepare.setInt(un, t.getHaut().getX());
+                prepare.setInt(deux, t.getHaut().getY());
+                prepare.setInt(trois, t.getGauche().getX());
+                prepare.setInt(quatre, t.getGauche().getY());
+                prepare.setInt(cinq, t.getDroite().getX());
+                prepare.setInt(six, t.getDroite().getY());
                 int result = prepare.executeUpdate();
                 assert result == 1;
+                System.out.println("Triangle deplacé");
             } catch (SQLException e) {
                 e.printStackTrace();
                 return t2;

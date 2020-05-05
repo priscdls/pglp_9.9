@@ -40,8 +40,9 @@ public class CarreDaoJDBC extends AbstractDao<Carre> {
             prepare.setInt(quatre, c.getLongueur());
             result = prepare.executeUpdate();
             assert result == un;
+            System.out.println("Carre créé");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Nom existe déjà");
             return null;
         }
         return c;
@@ -108,14 +109,15 @@ public class CarreDaoJDBC extends AbstractDao<Carre> {
                 final int trois = 3;
                 final int quatre = 4;
                 PreparedStatement prepare = connect.prepareStatement(
-                        "UPDATE Carre SET Nom = ?, Centre_X = ?,"
+                        "UPDATE Carre SET Centre_X = ?,"
                         + "Centre_Y = ?, Longueur = ? WHERE Nom = ?");
-                prepare.setString(un, c.getNom());
-                prepare.setInt(deux, c.getCentre().getX());
-                prepare.setInt(trois, c.getCentre().getY());
-                prepare.setInt(quatre, c.getLongueur());
+                prepare.setString(quatre, c.getNom());
+                prepare.setInt(un, c.getCentre().getX());
+                prepare.setInt(deux, c.getCentre().getY());
+                prepare.setInt(trois, c.getLongueur());
                 int result = prepare.executeUpdate();
                 assert result == 1;
+                System.out.println("Carre deplacé");
             } catch (SQLException e) {
                 e.printStackTrace();
                 return c2;
