@@ -24,10 +24,15 @@ public class GroupeDaoJDBC extends AbstractDao<Groupe> {
         try {
             final int un = 1;
             PreparedStatement prepare = connect.prepareStatement(
-                    "INSERT INTO Groupe (Nom)"
+                    "INSERT INTO Forme (Nom)"
                     + "VALUES (?)");
             prepare.setString(un, g.getNom());
             int result = prepare.executeUpdate();
+            prepare = connect.prepareStatement(
+                    "INSERT INTO Groupe (Nom)"
+                    + "VALUES (?)");
+            prepare.setString(un, g.getNom());
+            result = prepare.executeUpdate();
             assert result == un;
             Iterator<Forme> it = g.iterator();
             FactoryDaoJDBC fdj = new FactoryDaoJDBC(connect);
@@ -37,35 +42,27 @@ public class GroupeDaoJDBC extends AbstractDao<Groupe> {
                     Cercle c = (Cercle) f;
                     CercleDaoJDBC cdj = (CercleDaoJDBC) fdj.getCercleDao();
                     cdj.create(c);
-                    GroupeFormeDaoJDBC.createGroupeCercle(connect,
-                            g.getNom(), c.getNom());
                 } else if (f.getClass() == Carre.class) {
                     Carre c = (Carre) f;
                     CarreDaoJDBC cdj =
                             (CarreDaoJDBC) fdj.getCarreDao();
                     cdj.create(c);
-                    GroupeFormeDaoJDBC.createGroupeCarre(connect,
-                            g.getNom(), c.getNom());
                 } else if (f.getClass() == Rectangle.class) {
                     Rectangle r = (Rectangle) f;
                     RectangleDaoJDBC rdj =
                             (RectangleDaoJDBC) fdj.getRectangleDao();
                     rdj.create(r);
-                    GroupeFormeDaoJDBC.createGroupeRectangle(connect,
-                            g.getNom(), r.getNom());
                 } else if (f.getClass() == Triangle.class) {
                     Triangle t = (Triangle) f;
                     TriangleDaoJDBC tdj =
                             (TriangleDaoJDBC) fdj.getTriangleDao();
                     tdj.create(t);
-                    GroupeFormeDaoJDBC.createGroupeTriangle(connect,
-                            g.getNom(), t.getNom());
                 } else {
                     Groupe g2 = (Groupe) f;
                     create(g2);
-                    GroupeFormeDaoJDBC.createGroupeGroupe(connect,
-                            g.getNom(), g2.getNom());
                 }
+                GroupeFormeDaoJDBC.createGroupeForme(connect,
+                		g.getNom(), f.getNom());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -91,7 +88,7 @@ public class GroupeDaoJDBC extends AbstractDao<Groupe> {
                 g = new Groupe(nom);
             }
             ArrayList<Forme> lf =
-                    GroupeFormeDaoJDBC.findAllGroupeForme(connect, nom);
+                    GroupeFormeDaoJDBC.findGroupeForme(connect, nom);
             for (Forme f : lf) {
                 g.add(f);
             }
@@ -112,7 +109,7 @@ public class GroupeDaoJDBC extends AbstractDao<Groupe> {
             PreparedStatement prepare = connect.prepareStatement(
                     "SELECT Nom FROM Groupe");
             ResultSet result = prepare.executeQuery();
-            if (result.next()) {
+            while (result.next()) {
                 g.add(find(result.getString("Nom")));
             }
         } catch (SQLException e) {
@@ -149,11 +146,16 @@ public class GroupeDaoJDBC extends AbstractDao<Groupe> {
     public void delete(final Groupe g) {
         final int un = 1;
         try {
-            GroupeFormeDaoJDBC.deleteAllGroupeForme(connect, g.getNom());
+            GroupeFormeDaoJDBC.deleteGroupeForme(connect, g.getNom());
+            GroupeFormeDaoJDBC.deleteFormeGroupe(connect, g.getNom());
             PreparedStatement prepare = connect.prepareStatement(
                     "DELETE FROM Groupe WHERE Nom = ?");
             prepare.setString(1, g.getNom());
             int result = prepare.executeUpdate();
+            prepare = connect.prepareStatement(
+                    "DELETE FROM Forme WHERE Nom = ?");
+            prepare.setString(1, g.getNom());
+            result = prepare.executeUpdate();
             assert result == un;
         } catch (SQLException e) {
             e.printStackTrace();

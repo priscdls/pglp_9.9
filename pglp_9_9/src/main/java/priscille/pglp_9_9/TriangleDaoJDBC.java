@@ -29,6 +29,11 @@ public class TriangleDaoJDBC extends AbstractDao<Triangle> {
             final int six = 6;
             final int sept = 7;
             PreparedStatement prepare = connect.prepareStatement(
+                    "INSERT INTO Forme (Nom)"
+                    + "VALUES (?)");
+            prepare.setString(un, t.getNom());
+            int result = prepare.executeUpdate();
+            prepare = connect.prepareStatement(
                     "INSERT INTO Carre (Nom,Sommet1_X,Sommet1_Y,"
                     + "Sommet2_X,Sommet2_Y,Sommet3_X,Sommet3_Y)"
                     + "VALUES (?,?,?,?,?,?,?)");
@@ -39,7 +44,7 @@ public class TriangleDaoJDBC extends AbstractDao<Triangle> {
             prepare.setInt(cinq, t.getGauche().getY());
             prepare.setInt(six, t.getDroite().getX());
             prepare.setInt(sept, t.getDroite().getY());
-            int result = prepare.executeUpdate();
+            result = prepare.executeUpdate();
             assert result == un;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -89,7 +94,7 @@ public class TriangleDaoJDBC extends AbstractDao<Triangle> {
             PreparedStatement prepare = connect.prepareStatement(
                     "SELECT Nom FROM Triangle");
             ResultSet result = prepare.executeQuery();
-            if (result.next()) {
+            while (result.next()) {
                 t.add(find(result.getString("Nom")));
             }
         } catch (SQLException e) {
@@ -144,11 +149,15 @@ public class TriangleDaoJDBC extends AbstractDao<Triangle> {
     public void delete(final Triangle t) {
         final int un = 1;
         try {
-            GroupeFormeDaoJDBC.deleteGroupeTriangle(connect, t.getNom());
+            GroupeFormeDaoJDBC.deleteFormeGroupe(connect, t.getNom());
             PreparedStatement prepare = connect.prepareStatement(
                     "DELETE FROM Triangle WHERE Nom = ?");
             prepare.setString(1, t.getNom());
             int result = prepare.executeUpdate();
+            prepare = connect.prepareStatement(
+                    "DELETE FROM Forme WHERE Nom = ?");
+            prepare.setString(1, t.getNom());
+            result = prepare.executeUpdate();
             assert result == un;
         } catch (SQLException e) {
             e.printStackTrace();
