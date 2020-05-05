@@ -6,7 +6,7 @@ public class FactoryDaoJDBC {
     /**
      * Connecteur.
      */
-    protected Connection connect;
+    private Connection connect;
     /**
      * Constructeur.
      * @param c Le connecteur

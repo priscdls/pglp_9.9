@@ -80,7 +80,7 @@ public class CercleDaoJDBC extends AbstractDao<Cercle> {
      */
     @Override
     public ArrayList<Cercle> findAll() {
-    	ArrayList<Cercle> c = new ArrayList<Cercle>();
+        ArrayList<Cercle> c = new ArrayList<Cercle>();
         try {
             PreparedStatement prepare = connect.prepareStatement(
                     "SELECT Nom FROM Cercle");

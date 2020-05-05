@@ -89,16 +89,16 @@ public abstract class GroupeFormeDaoJDBC {
                 GroupeDaoJDBC gdj = (GroupeDaoJDBC) fdj.getGroupeDao();
                 Forme form = cercledj.find(result.getString("NomForme"));
                 if (form == null) {
-                	form = carredj.find(result.getString("NomForme"));
+                    form = carredj.find(result.getString("NomForme"));
                 }
                 if (form == null) {
-                	form = rdj.find(result.getString("NomForme"));
+                    form = rdj.find(result.getString("NomForme"));
                 }
                 if (form == null) {
-                	form = tdj.find(result.getString("NomForme"));
+                    form = tdj.find(result.getString("NomForme"));
                 }
                 if (form == null) {
-                	form = gdj.find(result.getString("NomForme"));
+                    form = gdj.find(result.getString("NomForme"));
                 }
                 f.add(form);
             }

@@ -13,12 +13,12 @@ public abstract class DataBase {
      */
     public static Connection createBase() {
         try {
-			return DriverManager.getConnection(
-			        "jdbc:derby:DataForme;create=true");
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
+            return DriverManager.getConnection(
+                    "jdbc:derby:DataForme;create=true");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
     /**
      * Supprime toutes les tables de la base de données.
@@ -61,11 +61,11 @@ public abstract class DataBase {
      */
     public static void createAllTables(final Connection connect)
             throws SQLException {
-    	String forme = "CREATE TABLE Forme ("
+        String forme = "CREATE TABLE Forme ("
                 + "Nom varchar(30),"
                 + "PRIMARY KEY (Nom)"
                 + ")";
-    	String cercle = "CREATE TABLE Cercle ("
+        String cercle = "CREATE TABLE Cercle ("
                 + "Nom varchar(30),"
                 + "Centre_X int,"
                 + "Centre_Y int,"

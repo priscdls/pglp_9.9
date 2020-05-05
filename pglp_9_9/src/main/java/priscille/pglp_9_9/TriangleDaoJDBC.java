@@ -89,7 +89,7 @@ public class TriangleDaoJDBC extends AbstractDao<Triangle> {
      */
     @Override
     public ArrayList<Triangle> findAll() {
-    	ArrayList<Triangle> t = new ArrayList<Triangle>();
+        ArrayList<Triangle> t = new ArrayList<Triangle>();
         try {
             PreparedStatement prepare = connect.prepareStatement(
                     "SELECT Nom FROM Triangle");

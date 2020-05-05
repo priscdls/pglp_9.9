@@ -83,7 +83,7 @@ public class RectangleDaoJDBC extends AbstractDao<Rectangle> {
      */
     @Override
     public ArrayList<Rectangle> findAll() {
-    	ArrayList<Rectangle> r = new ArrayList<Rectangle>();
+        ArrayList<Rectangle> r = new ArrayList<Rectangle>();
         try {
             PreparedStatement prepare = connect.prepareStatement(
                     "SELECT Nom FROM Rectangle");

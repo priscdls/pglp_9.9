@@ -62,7 +62,7 @@ public class GroupeDaoJDBC extends AbstractDao<Groupe> {
                     create(g2);
                 }
                 GroupeFormeDaoJDBC.createGroupeForme(connect,
-                		g.getNom(), f.getNom());
+                        g.getNom(), f.getNom());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -104,7 +104,7 @@ public class GroupeDaoJDBC extends AbstractDao<Groupe> {
      */
     @Override
     public ArrayList<Groupe> findAll() {
-    	ArrayList<Groupe> g = new ArrayList<Groupe>();
+        ArrayList<Groupe> g = new ArrayList<Groupe>();
         try {
             PreparedStatement prepare = connect.prepareStatement(
                     "SELECT Nom FROM Groupe");

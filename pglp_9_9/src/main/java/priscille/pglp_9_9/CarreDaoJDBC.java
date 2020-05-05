@@ -24,7 +24,7 @@ public class CarreDaoJDBC extends AbstractDao<Carre> {
             final int un = 1;
             final int deux = 2;
             final int trois = 3;
-            final int quatre = 4; 
+            final int quatre = 4;
             PreparedStatement prepare = connect.prepareStatement(
                     "INSERT INTO Forme (Nom)"
                     + "VALUES (?)");
@@ -80,7 +80,7 @@ public class CarreDaoJDBC extends AbstractDao<Carre> {
      */
     @Override
     public ArrayList<Carre> findAll() {
-    	ArrayList<Carre> c = new ArrayList<Carre>();
+        ArrayList<Carre> c = new ArrayList<Carre>();
         try {
             PreparedStatement prepare = connect.prepareStatement(
                     "SELECT Nom FROM Carre");

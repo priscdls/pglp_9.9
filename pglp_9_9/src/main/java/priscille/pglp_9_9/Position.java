@@ -60,26 +60,27 @@ public class Position {
     }
     /**
      * Constructeur.
-     * @param position La position en chaine de caractere
+     * @param p La position en chaine de caractere
      * @throws Exception Position invalide
      */
-    public Position(String position) throws Exception {
-    	if (position.startsWith("(") && position.endsWith(")")) {
-    		position = position.substring(1,position.length()-1);
-    		String[] pos = position.split(",");
-    		if (pos.length == 2) {
-    			this.x = Integer.parseInt(pos[0]);
-    			this.y = Integer.parseInt(pos[1]);
-    		} else {
-    			System.err.println("Position invalide");
-    			throw new Exception();
-    		}
-    	} else {
-    		System.err.println("Position invalide");
-    		throw new Exception();
-    	}
-	}
-	/**
+    public Position(final String p) throws Exception {
+        String position = p + "";
+        if (position.startsWith("(") && position.endsWith(")")) {
+            position = position.substring(1, position.length() - 1);
+            String[] pos = position.split(",");
+            if (pos.length == 2) {
+                this.x = Integer.parseInt(pos[0]);
+                this.y = Integer.parseInt(pos[1]);
+            } else {
+                System.err.println("Position invalide");
+                throw new Exception();
+            }
+        } else {
+            System.err.println("Position invalide");
+            throw new Exception();
+        }
+    }
+    /**
      * Fonction de déplacement d'une position.
      * @param abs Ajout en abscisse par rapport a la position initiale
      * @param ord Ajout en ordonnée par rapport a la position initiale
