@@ -349,6 +349,8 @@ public class DrawingTUI {
          } else {
              Connection c = DataBase.createBase();
              FactoryDaoJDBC fdj = new FactoryDaoJDBC(c);
+             GroupeDaoJDBC groupe = (GroupeDaoJDBC)
+                     fdj.getGroupeDao();
              CercleDaoJDBC cercle = (CercleDaoJDBC)
                      fdj.getCercleDao();
              CarreDaoJDBC carre = (CarreDaoJDBC)
@@ -358,12 +360,15 @@ public class DrawingTUI {
              TriangleDaoJDBC triangle = (TriangleDaoJDBC)
                      fdj.getTriangleDao();
              ArrayList<Forme> f = new ArrayList<Forme>();
+             f.addAll(groupe.findAll());
              f.addAll(cercle.findAll());
              f.addAll(carre.findAll());
              f.addAll(rectangle.findAll());
              f.addAll(triangle.findAll());
              for (Forme f2 : f) {
-                 f2.draw();
+                 if (!GroupeFormeDaoJDBC.checkFormeInGroupe(c, f2.getNom())) {
+                     f2.draw();
+                 }
              }
              try {
                 c.close();

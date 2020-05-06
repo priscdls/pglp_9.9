@@ -107,4 +107,22 @@ public abstract class GroupeFormeDaoJDBC {
         }
         return f;
     }
+    /**
+     * Verifie qu'une forme est contenu dans un groupe.
+     * @param c Le connecteur a la base de données
+     * @param nom La forme a vérifié
+     * @return Vrai si la forme est contenu dans un groupe
+     */
+    public static boolean checkFormeInGroupe(final Connection c,
+            final String nom) {
+        try {
+            PreparedStatement prepare = c.prepareStatement(
+                    "SELECT * FROM GroupeForme WHERE NomForme = ?");
+            prepare.setString(1, nom);
+            ResultSet result = prepare.executeQuery();
+            return result.next();
+        } catch (SQLException e) {
+            return false;
+        }
+    }
 }
