@@ -326,6 +326,7 @@ public class DrawingTUI {
          f.addAll(carre.findAll());
          f.addAll(rectangle.findAll());
          f.addAll(triangle.findAll());
+         System.out.println("Dessin :");
          for (Forme f2 : f) {
              if (!GroupeFormeDaoJDBC.checkFormeInGroupe(c, f2.getNom())) {
                  f2.draw();
