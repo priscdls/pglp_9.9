@@ -31,7 +31,6 @@ public class DrawingApp {
      */
     public static void main(final String[] args) throws SQLException {
         Connection connect = DataBase.createBase();
-        //DataBase.deleteAllTables(connect);
         DataBase.createAllTables(connect);
         connect.close();
         DrawingApp da = new DrawingApp();
