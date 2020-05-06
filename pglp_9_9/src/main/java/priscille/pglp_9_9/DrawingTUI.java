@@ -272,39 +272,6 @@ public class DrawingTUI {
         return null;
     }
     /**
-     * Lecture d'une commande pour dessiner une forme.
-     * @param comm La ligne de commande
-     * @return La commande pour réaliser un affichage
-     */
-    private Command drawCommand(final String comm) {
-        String command = comm;
-        command = command.replace(" ", "");
-        String[] split = command.split("draw");
-        if (!split[0].equals("")) {
-             System.err.println("Commande invalide");
-         }
-         if (split[1].startsWith("(") && split[1].endsWith(")")) {
-             split[1] = split[1].substring(
-                     1, split[1].length() - 1);
-             String[] nom = split[1].split(",");
-             ArrayList<Forme> lf = new ArrayList<Forme>();
-             for (String n : nom) {
-                 Forme f = findAll(n);
-                 if (f != null) {
-                     lf.add(f);
-                 } else {
-                     System.err.println("Commande "
-                             + "invalide");
-                     return null;
-                 }
-             }
-             return new DrawCommand(lf);
-         } else {
-             System.err.println("Commande invalide");
-         }
-         return null;
-    }
-    /**
      * Lecture d'une commande pour supprimer une forme.
      * @param comm La ligne de commande
      * @return La commande pour supprimer une forme
@@ -338,44 +305,37 @@ public class DrawingTUI {
          return null;
     }
     /**
-     * Lecture d'une commande pour dessiner toutes les formes.
-     * @param comm La ligne de commande
+     * Dessiner toutes les formes.
      */
-    private void drawAllCommand(final String comm) {
-        String command = comm;
-        command = command.replace(" ", "");
-        if (!command.equals("drawAll")) {
-             System.err.println("Commande invalide");
-         } else {
-             Connection c = DataBase.createBase();
-             FactoryDaoJDBC fdj = new FactoryDaoJDBC(c);
-             GroupeDaoJDBC groupe = (GroupeDaoJDBC)
-                     fdj.getGroupeDao();
-             CercleDaoJDBC cercle = (CercleDaoJDBC)
-                     fdj.getCercleDao();
-             CarreDaoJDBC carre = (CarreDaoJDBC)
-                     fdj.getCarreDao();
-             RectangleDaoJDBC rectangle = (RectangleDaoJDBC)
-                     fdj.getRectangleDao();
-             TriangleDaoJDBC triangle = (TriangleDaoJDBC)
-                     fdj.getTriangleDao();
-             ArrayList<Forme> f = new ArrayList<Forme>();
-             f.addAll(groupe.findAll());
-             f.addAll(cercle.findAll());
-             f.addAll(carre.findAll());
-             f.addAll(rectangle.findAll());
-             f.addAll(triangle.findAll());
-             for (Forme f2 : f) {
-                 if (!GroupeFormeDaoJDBC.checkFormeInGroupe(c, f2.getNom())) {
-                     f2.draw();
-                 }
+    public void drawAllCommand() {
+         Connection c = DataBase.createBase();
+         FactoryDaoJDBC fdj = new FactoryDaoJDBC(c);
+         GroupeDaoJDBC groupe = (GroupeDaoJDBC)
+                 fdj.getGroupeDao();
+         CercleDaoJDBC cercle = (CercleDaoJDBC)
+                 fdj.getCercleDao();
+         CarreDaoJDBC carre = (CarreDaoJDBC)
+                 fdj.getCarreDao();
+         RectangleDaoJDBC rectangle = (RectangleDaoJDBC)
+                 fdj.getRectangleDao();
+         TriangleDaoJDBC triangle = (TriangleDaoJDBC)
+                 fdj.getTriangleDao();
+         ArrayList<Forme> f = new ArrayList<Forme>();
+         f.addAll(groupe.findAll());
+         f.addAll(cercle.findAll());
+         f.addAll(carre.findAll());
+         f.addAll(rectangle.findAll());
+         f.addAll(triangle.findAll());
+         for (Forme f2 : f) {
+             if (!GroupeFormeDaoJDBC.checkFormeInGroupe(c, f2.getNom())) {
+                 f2.draw();
              }
-             try {
-                c.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
          }
+         try {
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     /**
      * Lecture d'une commande.
@@ -413,12 +373,8 @@ public class DrawingTUI {
             }
         } else if (command.contains("move")) {
             return moveCommand(command);
-        } else if (command.contains("drawAll")) {
-            drawAllCommand(command);
         } else if (command.contains("delete")) {
             return deleteCommand(command);
-        } else if (command.contains("draw")) {
-            return drawCommand(command);
         } else if (!command.equals("exit")) {
             System.err.println("Commande invalide");
         }

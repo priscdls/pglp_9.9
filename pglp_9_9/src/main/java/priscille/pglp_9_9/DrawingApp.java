@@ -48,9 +48,7 @@ public class DrawingApp {
                 + "t1 = Triangle((0, 0), (2, 2), (4, 0))\n"
                 + "g1 = Groupe(c1, c2, r1, t1)\n"
                 + "Déplacement : move(c1, (10, 20))\n"
-                + "Affichage : draw(c1, c2)\n"
                 + "Suppression : delete(r1, t1)\n"
-                + "Affichage du dessin en entier : drawAll\n"
                 + "Quitter : exit\n\n"
                 + "Entrer une commande :");
         String command = scanner.nextLine();
@@ -59,6 +57,7 @@ public class DrawingApp {
             c = dt.nextCommand(command);
             if (c != null) {
                 c.execute();
+                dt.drawAllCommand();
             }
             System.out.println("Entrer une nouvelle commande :");
             command = scanner.nextLine();
