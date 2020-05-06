@@ -21,25 +21,29 @@ public class CreateCommand implements Command {
     public void execute() {
         Connection c = DataBase.createBase();
         FactoryDaoJDBC fdj = new FactoryDaoJDBC(c);
+        Forme f = null;
         if (form.getClass() == Cercle.class) {
             CercleDaoJDBC cercle = (CercleDaoJDBC)
                     fdj.getCercleDao();
-            cercle.create((Cercle) form);
+            f = cercle.create((Cercle) form);
         } else if (form.getClass() == Carre.class) {
             CarreDaoJDBC carre = (CarreDaoJDBC) fdj.getCarreDao();
-            carre.create((Carre) form);
+            f = carre.create((Carre) form);
         } else if (form.getClass() == Rectangle.class) {
             RectangleDaoJDBC rectangle = (RectangleDaoJDBC)
                     fdj.getRectangleDao();
-            rectangle.create((Rectangle) form);
+            f = rectangle.create((Rectangle) form);
         } else if (form.getClass() == Triangle.class) {
             TriangleDaoJDBC triangle = (TriangleDaoJDBC)
                     fdj.getTriangleDao();
-            triangle.create((Triangle) form);
+            f = triangle.create((Triangle) form);
         } else if (form.getClass() == Groupe.class) {
             GroupeDaoJDBC groupe = (GroupeDaoJDBC)
                     fdj.getGroupeDao();
-            groupe.create((Groupe) form);
+            f = groupe.create((Groupe) form);
+        }
+        if (f == null) {
+            System.out.println("Nom existe déjà");
         }
         try {
             c.close();

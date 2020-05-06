@@ -44,7 +44,6 @@ public class RectangleDaoJDBC extends AbstractDao<Rectangle> {
             assert result == un;
             System.out.println("Rectangle créé");
         } catch (SQLException e) {
-            System.out.println("Nom existe déjà");
             return null;
         }
         return r;
@@ -151,6 +150,7 @@ public class RectangleDaoJDBC extends AbstractDao<Rectangle> {
             prepare.setString(1, r.getNom());
             result = prepare.executeUpdate();
             assert result == un;
+            System.out.println("Triangle supprimé");
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -42,7 +42,6 @@ public class CarreDaoJDBC extends AbstractDao<Carre> {
             assert result == un;
             System.out.println("Carre créé");
         } catch (SQLException e) {
-            System.out.println("Nom existe déjà");
             return null;
         }
         return c;
@@ -145,6 +144,7 @@ public class CarreDaoJDBC extends AbstractDao<Carre> {
             prepare.setString(1, c.getNom());
             result = prepare.executeUpdate();
             assert result == un;
+            System.out.println("Carré supprimé");
         } catch (SQLException e) {
             e.printStackTrace();
         }

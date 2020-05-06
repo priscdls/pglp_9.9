@@ -48,7 +48,6 @@ public class TriangleDaoJDBC extends AbstractDao<Triangle> {
             assert result == un;
             System.out.println("Triangle créé");
         } catch (SQLException e) {
-            System.out.println("Nom existe déjà");
             return null;
         }
         return t;
@@ -161,6 +160,7 @@ public class TriangleDaoJDBC extends AbstractDao<Triangle> {
             prepare.setString(1, t.getNom());
             result = prepare.executeUpdate();
             assert result == un;
+            System.out.println("Triangle supprimé");
         } catch (SQLException e) {
             e.printStackTrace();
         }

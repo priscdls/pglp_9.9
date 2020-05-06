@@ -41,7 +41,7 @@ public class DrawingApp {
      * Execute le programme.
      */
     public void run() {
-        System.out.println("Types de commandes valides :\n"
+        System.out.println("Exemples de commandes valides :\n"
                 + "Creation : \n"
                 + "c1 = Cercle((0, 0), 50)\n"
                 + "c2 = Carre((0, 0), 30)\n"
@@ -50,6 +50,7 @@ public class DrawingApp {
                 + "g1 = Groupe(c1, c2, r1, t1)\n"
                 + "Déplacement : move(c1, (10, 20))\n"
                 + "Affichage : draw(c1, c2)\n"
+                + "Suppression : delete(r1, t1)\n"
                 + "Affichage du dessin en entier : drawAll\n"
                 + "Quitter : exit\n\n"
                 + "Entrer une commande :");

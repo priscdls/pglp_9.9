@@ -42,7 +42,6 @@ public class CercleDaoJDBC extends AbstractDao<Cercle> {
             assert result == un;
             System.out.println("Cercle créé");
         } catch (SQLException e) {
-            System.out.println("Nom existe déjà");
             return null;
         }
         return c;
@@ -145,6 +144,7 @@ public class CercleDaoJDBC extends AbstractDao<Cercle> {
             prepare.setString(1, c.getNom());
             result = prepare.executeUpdate();
             assert result == un;
+            System.out.println("Cercle supprimé");
         } catch (SQLException e) {
             e.printStackTrace();
         }

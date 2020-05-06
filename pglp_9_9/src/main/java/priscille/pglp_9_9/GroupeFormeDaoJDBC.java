@@ -22,7 +22,7 @@ public abstract class GroupeFormeDaoJDBC {
             final int un = 1;
             final int deux = 2;
             PreparedStatement prepare = c.prepareStatement(
-                    "INSERT INTO GroupeForme (NomGroupe, NomCercle)"
+                    "INSERT INTO GroupeForme (NomGroupe, NomForme)"
                     + "VALUES (?,?)");
             prepare.setString(un, nom);
             prepare.setString(deux, nom2);

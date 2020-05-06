@@ -66,7 +66,6 @@ public class GroupeDaoJDBC extends AbstractDao<Groupe> {
             }
             System.out.println("Groupe créé");
         } catch (SQLException e) {
-            System.out.println("Nom existe déjà");
             return null;
         }
         return g;
@@ -158,6 +157,7 @@ public class GroupeDaoJDBC extends AbstractDao<Groupe> {
             prepare.setString(1, g.getNom());
             result = prepare.executeUpdate();
             assert result == un;
+            System.out.println("Groupe supprimé");
         } catch (SQLException e) {
             e.printStackTrace();
         }

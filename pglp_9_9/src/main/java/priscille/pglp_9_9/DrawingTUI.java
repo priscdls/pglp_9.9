@@ -305,14 +305,46 @@ public class DrawingTUI {
          return null;
     }
     /**
+     * Lecture d'une commande pour supprimer une forme.
+     * @param comm La ligne de commande
+     * @return La commande pour supprimer une forme
+     */
+    private Command deleteCommand(final String comm) {
+        String command = comm;
+        command = command.replace(" ", "");
+        String[] split = command.split("delete");
+        if (!split[0].equals("")) {
+             System.err.println("Commande invalide");
+         }
+         if (split[1].startsWith("(") && split[1].endsWith(")")) {
+             split[1] = split[1].substring(
+                     1, split[1].length() - 1);
+             String[] nom = split[1].split(",");
+             ArrayList<Forme> lf = new ArrayList<Forme>();
+             for (String n : nom) {
+                 Forme f = findAll(n);
+                 if (f != null) {
+                     lf.add(f);
+                 } else {
+                     System.err.println("Commande "
+                             + "invalide");
+                     return null;
+                 }
+             }
+             return new DeleteCommand(lf);
+         } else {
+             System.err.println("Commande invalide");
+         }
+         return null;
+    }
+    /**
      * Lecture d'une commande pour dessiner toutes les formes.
      * @param comm La ligne de commande
      */
     private void drawAllCommand(final String comm) {
         String command = comm;
         command = command.replace(" ", "");
-        String[] split = command.split("drawAll");
-        if (!split[0].equals("") || !split[1].equals("")) {
+        if (!command.equals("drawAll")) {
              System.err.println("Commande invalide");
          } else {
              Connection c = DataBase.createBase();
@@ -376,10 +408,12 @@ public class DrawingTUI {
             }
         } else if (command.contains("move")) {
             return moveCommand(command);
-        } else if (command.contains("draw(")) {
-            return drawCommand(command);
         } else if (command.contains("drawAll")) {
             drawAllCommand(command);
+        } else if (command.contains("delete")) {
+            return deleteCommand(command);
+        } else if (command.contains("draw")) {
+            return drawCommand(command);
         } else if (!command.equals("exit")) {
             System.err.println("Commande invalide");
         }
