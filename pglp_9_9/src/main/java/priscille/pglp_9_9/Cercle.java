@@ -19,9 +19,15 @@ public class Cercle extends Forme {
     /**
      * Setter du rayon.
      * @param r Le nouveau rayon
+     * @throws Exception Rayon négatif
      */
-    public void setRayon(final int r) {
-        this.rayon = r;
+    public void setRayon(final int r) throws Exception {
+        if (r >= 0) {
+            this.rayon = r;
+        } else {
+            System.err.println("Rayon négatif");
+            throw new Exception();
+        }
     }
     /**
      * Getter du centre.
@@ -39,14 +45,16 @@ public class Cercle extends Forme {
     }
     /**
      * Constructeur.
-     * @param n
-     * @param p
-     * @param r
+     * @param n Le nom
+     * @param p La position initiale
+     * @param r Le rayon
+     * @throws Exception Rayon negatif
      */
-    protected Cercle(final String n, final Position p, final int r) {
+    public Cercle(final String n, final Position p, final int r)
+            throws Exception {
         setNom(n);
         this.centre = p.clone();
-        this.rayon = r;
+        setRayon(r);
     }
     /**
      * Fonction de déplacement.

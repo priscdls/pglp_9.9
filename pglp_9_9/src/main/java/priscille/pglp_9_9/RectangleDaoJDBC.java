@@ -63,13 +63,18 @@ public class RectangleDaoJDBC extends AbstractDao<Rectangle> {
             prepare.setString(un, nom);
             ResultSet result = prepare.executeQuery();
             if (result.next()) {
-                r = new Rectangle(
+                try {
+                    r = new Rectangle(
                         result.getString("Nom"),
                         new Position(result.getInt("Centre_X"),
                         result.getInt("Centre_Y")),
                         result.getInt("Longueur"),
                         result.getInt("Hauteur")
                         );
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

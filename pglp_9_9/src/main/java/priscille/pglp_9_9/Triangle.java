@@ -58,11 +58,11 @@ public class Triangle extends Forme {
     /**
      * Constructeur.
      * @param n Le nom
-     * @param p1 Le sommet 1
-     * @param p2 Le sommet 2
-     * @param p3 Le sommet 3
+     * @param p1 La position du sommet 1
+     * @param p2 La position du sommet 2
+     * @param p3 La position du sommet 3
      */
-    protected Triangle(final String n, final Position p1,
+    public Triangle(final String n, final Position p1,
             final Position p2, final Position p3) {
         setNom(n);
         this.haut = p1.clone();

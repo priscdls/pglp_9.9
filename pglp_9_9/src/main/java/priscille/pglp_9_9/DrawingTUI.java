@@ -35,12 +35,15 @@ public class DrawingTUI {
                             rayon);
                     return c;
                 } catch (Exception e) {
+                    System.err.println("Argument(s) invalide(s)");
                     System.err.println("Commande invalide");
                 }
             } else {
+                System.err.println("Nombre d'arguments invalide");
                 System.err.println("Commande invalide");
             }
         } else {
+            System.err.println("Parenthèse(s) manquante(s)");
              System.err.println("Commande invalide");
          }
         return null;
@@ -71,12 +74,15 @@ public class DrawingTUI {
                             longueur);
                     return c;
                 } catch (Exception e) {
+                    System.err.println("Argument(s) invalide(s)");
                     System.err.println("Commande invalide");
                 }
              } else {
+                 System.err.println("Nombre d'arguments invalide");
                  System.err.println("Commande invalide");
              }
          } else {
+             System.err.println("Parenthèse(s) manquante(s)");
              System.err.println("Commande invalide");
          }
          return null;
@@ -110,12 +116,15 @@ public class DrawingTUI {
                             p, longueur, hauteur);
                     return c;
                 } catch (Exception e) {
+                    System.err.println("Argument(s) invalide(s)");
                     System.err.println("Commande invalide");
                 }
              } else {
+                 System.err.println("Nombre d'arguments invalide");
                  System.err.println("Commande invalide");
              }
          } else {
+             System.err.println("Parenthèse(s) manquante(s)");
              System.err.println("Commande invalide");
          }
          return null;
@@ -153,12 +162,15 @@ public class DrawingTUI {
                             p, p2, p3);
                     return t;
                 } catch (Exception e) {
+                    System.err.println("Argument(s) invalide(s)");
                     System.err.println("Commande invalide");
                 }
              } else {
+                 System.err.println("Nombre d'arguments invalide");
                  System.err.println("Commande invalide");
              }
          } else {
+             System.err.println("Parenthèse(s) manquante(s)");
              System.err.println("Commande invalide");
          }
          return null;
@@ -218,6 +230,8 @@ public class DrawingTUI {
                  if (f != null) {
                      g.add(f);
                  } else {
+                     System.err.println("Nom de "
+                              + "variable inconnue");
                      System.err.println("Commande "
                              + "invalide");
                      return null;
@@ -225,6 +239,7 @@ public class DrawingTUI {
              }
              return g;
          } else {
+             System.err.println("Parenthèse(s) manquante(s)");
              System.err.println("Commande invalide");
          }
          return null;
@@ -256,17 +271,23 @@ public class DrawingTUI {
                         return new MoveCommand(f,
                                 p.getX(), p.getY());
                     } else {
+                        System.err.println("Nom de "
+                                 + "variable inconnue");
                         System.err.println("Commande "
                                 + "invalide");
                     }
                     } catch (Exception e) {
+                        System.err.println("Position "
+                                 + "invalide");
                         System.err.println("Commande "
                                 + "invalide");
                     }
             } else {
+                System.err.println("Nombre d'arguments invalide");
                 System.err.println("Commande invalide");
             }
         } else {
+            System.err.println("Parenthèse(s) manquante(s)");
             System.err.println("Commande invalide");
         }
         return null;
@@ -293,6 +314,8 @@ public class DrawingTUI {
                  if (f != null) {
                      lf.add(f);
                  } else {
+                     System.err.println("Nom de "
+                             + "variable inconnue");
                      System.err.println("Commande "
                              + "invalide");
                      return null;
@@ -300,6 +323,7 @@ public class DrawingTUI {
              }
              return new DeleteCommand(lf);
          } else {
+             System.err.println("Parenthèse(s) manquante(s)");
              System.err.println("Commande invalide");
          }
          return null;
@@ -367,9 +391,6 @@ public class DrawingTUI {
                 }
                 if (f != null) {
                     return new CreateCommand(f);
-                } else {
-                    System.err.println("Commande invalide");
-                    return null;
                 }
             }
         } else if (command.contains("move")) {

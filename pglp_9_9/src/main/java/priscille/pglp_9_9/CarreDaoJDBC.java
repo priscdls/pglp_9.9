@@ -61,12 +61,17 @@ public class CarreDaoJDBC extends AbstractDao<Carre> {
             prepare.setString(un, nom);
             ResultSet result = prepare.executeQuery();
             if (result.next()) {
-                c = new Carre(
+                try {
+                    c = new Carre(
                         result.getString("Nom"),
                         new Position(result.getInt("Centre_X"),
                         result.getInt("Centre_Y")),
                         result.getInt("Longueur")
                         );
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

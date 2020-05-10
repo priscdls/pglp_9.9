@@ -43,7 +43,7 @@ public class CreateCommand implements Command {
             f = groupe.create((Groupe) form);
         }
         if (f == null) {
-            System.out.println("Nom existe déjà");
+            System.err.println("Nom existe déjà");
         }
         try {
             c.close();

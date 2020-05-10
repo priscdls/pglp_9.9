@@ -61,12 +61,17 @@ public class CercleDaoJDBC extends AbstractDao<Cercle> {
             prepare.setString(un, nom);
             ResultSet result = prepare.executeQuery();
             if (result.next()) {
-                c = new Cercle(
+                try {
+                    c = new Cercle(
                         result.getString("Nom"),
                         new Position(result.getInt("Centre_X"),
                         result.getInt("Centre_Y")),
                         result.getInt("Rayon")
                         );
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

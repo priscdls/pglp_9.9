@@ -37,9 +37,15 @@ public class Rectangle extends Forme {
     /**
      * Setter de la longueur.
      * @param l La nouvelle longueur
+     * @throws Exception Longueur négative
      */
-    public void setLongueur(final int l) {
-        this.longueur = l;
+    public void setLongueur(final int l) throws Exception {
+        if (l >= 0) {
+            this.longueur = l;
+        } else {
+            System.err.println("Longueur négative");
+            throw new Exception();
+        }
     }
     /**
      * Getter de la hauteur.
@@ -51,9 +57,15 @@ public class Rectangle extends Forme {
     /**
      * Setter de la hauteur.
      * @param h La nouvelle hauteur
+     * @throws Exception Hauteur négative
      */
-    public void setHauteur(final int h) {
-        this.hauteur = h;
+    public void setHauteur(final int h) throws Exception {
+        if (h >= 0) {
+            this.hauteur = h;
+        } else {
+            System.err.println("Hauteur négative");
+            throw new Exception();
+        }
     }
     /**
      * Constructeur.
@@ -61,13 +73,14 @@ public class Rectangle extends Forme {
      * @param p La position initiale
      * @param l La longueur initiale
      * @param h La hauteur initiale
+     * @throws Exception Arguments négatifs
      */
-    protected Rectangle(final String n, final Position p, final int l,
-            final int h) {
+    public Rectangle(final String n, final Position p, final int l,
+            final int h) throws Exception {
         setNom(n);
         this.centre = p.clone();
-        this.longueur = l;
-        this.hauteur = h;
+        setLongueur(l);
+        setHauteur(h);
     }
     /**
      * Fonction de déplacement.

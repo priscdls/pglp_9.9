@@ -33,20 +33,28 @@ public class Carre extends Forme {
     /**
      * Setter de la longueur.
      * @param l La nouvelle longueur
+     * @throws Exception Longueur négative
      */
-    public void setLongueur(final int l) {
-        this.longueur = l;
+    public void setLongueur(final int l) throws Exception {
+        if (l >= 0) {
+            this.longueur = l;
+        } else {
+            System.err.println("Longueur négative");
+            throw new Exception();
+        }
     }
     /**
      * Constructeur.
      * @param n Le nom
      * @param p La position initiale
      * @param l La longueur initiale
+     * @throws Exception Longueur négative
      */
-    protected Carre(final String n, final Position p, final int l) {
+    public Carre(final String n, final Position p, final int l)
+            throws Exception {
         setNom(n);
         this.centre = p.clone();
-        this.longueur = l;
+        setLongueur(l);
     }
     /**
      * Fonction de déplacement.
